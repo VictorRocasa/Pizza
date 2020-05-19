@@ -12,7 +12,7 @@
         <a class="nav-link cardapio" href='#cardapio' style="color: #707070; font-weight: bold;"> <font size="3"> Cardápio </font> </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link filiais" href='#comoComprar' style="color: #707070; font-weight: bold;" > <font size="3"> Como comprar? </font> </a>
+        <a class="nav-link filiais" href='#comoComprarEdit' style="color: #707070; font-weight: bold;" > <font size="3"> Filiais </font> </a>
       </li>
     </ul>
     </div>

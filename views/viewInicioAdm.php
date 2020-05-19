@@ -20,94 +20,107 @@ $stmtFiliais->execute();
 
 <div id="sobre">
 
-    <h5 id="Titulo">Atualizar sobre nós </h5> 
+	<h5 id="Titulo">Sobre nós </h5>
 
-    <div id="sobreDesc">
-		
-        <?php
-		while ($rowSobre = $stmtSobre->fetch(PDO::FETCH_ASSOC)) {
+	<div id="sobreDescEdit">
+		<div class="form-group">
+			<?php
+			while ($rowSobre = $stmtSobre->fetch(PDO::FETCH_ASSOC)) {
 
-            echo '<textarea name = sobre autocomplete=off form=editarSobre rows = 16 cols = 220" required style=resize:none;>';
-            echo $rowSobre['descricaoSobre'];
-            echo '</textarea>';
-        }
-        ?>
-		<form method=post id="editarSobre" action="./controllers/atualizarSobreController.php">
-			<button type="button" onclick="document.location = 'index.php'">Cancelar Mudanças</button>
-			<input type="submit" value="Salvar Mudanças">
-		</form>
-    </div>
+				echo '<textarea form=editarSobre class="form-control border border-warning" name=sobre autocomplete=off  style="height: 75vh" required>';
+				echo $rowSobre['descricaoSobre'];
+				echo '</textarea>';
+			}
+			?>
+			<form method=post id="editarSobre" action="./controllers/atualizarSobreController.php">
+				<div style="margin-top: 30px;">
+					<button type="button" class="btn btn-danger" onclick="document.location = 'index.php'">Cancelar Mudanças</button>
+					<input type="submit" class="btn btn-primary" value="Salvar Mudanças">
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <div id="cardapio">
-    <h5 id="Titulo">Atualizar cardápio </h5>
+	<h5 id="Titulo">Cardápio </h5>
 
-	<table style="width:70%">
-	  <tr style="border: 1px solid black;border-collapse: collapse;">
-		<th>Sabor</th>
-		<th>Ingredientes</th>
-		<th>Tamanhos</th>	
-		<th>Imagem</th>
-		<th>Tipo</th>				
-		<th>Editar</th>	
-		<th>Apagar</th>	
-	  </tr>
-	  <?php
-	        while ($rowCardapio = $stmtCardapio->fetch(PDO::FETCH_ASSOC)) {
-				if($rowCardapio['imagemCardapio'] == ''){
-					$rowCardapio['imagemCardapio'] = "SEM IMAGEM";
+	<div style="margin-top: 30px;">
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">Sabor</th>
+					<th scope="col">Ingredientes</th>
+					<th scope="col">Tamanhos</th>
+					<th scope="col">Imagem</th>
+					<th scope="col">Tipo</th>
+					<th scope="col">Editar</th>
+					<th scope="col">Apagar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				while ($rowCardapio = $stmtCardapio->fetch(PDO::FETCH_ASSOC)) {
+					if ($rowCardapio['imagemCardapio'] == '') {
+						$rowCardapio['imagemCardapio'] = "SEM IMAGEM";
+					}
+					echo "<tr>
+					<td>" . $rowCardapio['nomeCardapio'] . "</td>
+					<td>" . $rowCardapio['ingredientesCardapio'] . "</td>
+					<td>" . $rowCardapio['tamanhoCardapio'] . "</td>
+					<td>" . $rowCardapio['imagemCardapio'] . "</td>
+					<td>" . $rowCardapio['tipoCardapio'] . "</td>
+					<td><a href=./views/viewEditarCardapio.php?id=" . $rowCardapio['idCardapio'] . "><i class='fa fa-pencil-square-o' aria-hidden='true'></i></a></td>
+					<td><a class='text-danger' href=./controllers/deletarCardapioController.php?id=" . $rowCardapio['idCardapio'] . "><i class='fa fa-trash-o' aria-hidden='true'></i></a></td>
+				</tr>";
 				}
-				echo "	  <tr>
-							<td>".$rowCardapio['nomeCardapio']."</td>
-							<td>".$rowCardapio['ingredientesCardapio']."</td>
-							<td>".$rowCardapio['tamanhoCardapio']."</td>
-							<td>".$rowCardapio['imagemCardapio']."</td>
-							<td>".$rowCardapio['tipoCardapio']."</td>
-							<td><a href=./views/viewEditarCardapio.php?id=".$rowCardapio['idCardapio'].">Editar Informações</a></td>
-							<td><a href=./controllers/deletarCardapioController.php?id=".$rowCardapio['idCardapio'].">Apagar Informações</a></td>
-						  </tr>
-					";
-			}
-	  ?>
-	</table>
-	<br>
-	
-	<h5 id="Titulo" onclick="document.location = './views/viewAdicionarCardapio.php'" style = "cursor: pointer;">Adicionar Pizzas ao Cardápio<h5>
+				?>
+			</tbody>
+		</table>
+		<br>
+
+		<h6 class="btn btn-primary" onclick="document.location = './views/viewAdicionarCardapio.php'" style="cursor: pointer;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Adicionar Pizzas ao Cardápio</h6>
+	</div>
 </div>
 
-<div id="comoComprar">
+<div id="comoComprarEdit">
 
-    <h5 id="Titulo">Atualizar como comprar? </h5>
-	
-	<table style="width:70%">
-	  <tr style="border: 1px solid black;border-collapse: collapse;">
-		<th>Local da Filial</th>
-		<th>Telefone da Filial</th>
-		<th>Whatsapp da Filial</th>	
-		<th>Editar</th>	
-		<th>Apagar</th>	
-	  </tr>
-	  <?php
-	        while ($rowFiliais = $stmtFiliais->fetch(PDO::FETCH_ASSOC)) {
-				echo "	  <tr>
-							<td>".$rowFiliais['localFilial']."</td>
-							<td>".$rowFiliais['telefoneFilial']."</td>
-							<td>".$rowFiliais['whatsappFilial']."</td>
-							<td><a href=./views/viewEditarFilial.php?id=".$rowFiliais['idFilial'].">Editar Informações</a></td>
-							<td><a href=./controllers/deletarFilialController.php?id=".$rowFiliais['idFilial'].">Apagar Informações</a></td>
+	<h5 id="Titulo">Filiais </h5>
+
+	<div style="margin-top: 30px;">
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">Local</th>
+					<th scope="col">Telefone</th>
+					<th scope="col">Whatsapp</th>
+					<th scope="col">Editar</th>
+					<th scope="col">Apagar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				while ($rowFiliais = $stmtFiliais->fetch(PDO::FETCH_ASSOC)) {
+					echo "	  <tr>
+							<td>" . $rowFiliais['localFilial'] . "</td>
+							<td>" . $rowFiliais['telefoneFilial'] . "</td>
+							<td>" . $rowFiliais['whatsappFilial'] . "</td>
+							<td><a href=./views/viewEditarFilial.php?id=" . $rowFiliais['idFilial'] . "><i class='fa fa-pencil-square-o' aria-hidden='true'></a></td>
+							<td><a class='text-danger' href=./controllers/deletarFilialController.php?id=" . $rowFiliais['idFilial'] . "><i class='fa fa-trash-o' aria-hidden='true'></a></td>
 						  </tr>
 					";
-			}
-	  ?>      
-	</table>
-	<br>
-	
-	<h5 id="Titulo" onclick="document.location = './views/viewAdicionarFilial.php'" style = "cursor: pointer;">Adicionar Novas Filiais<h5>
+				}
+				?>
+			</tbody>
+		</table>
+		<br>
+
+		<h6 class="btn btn-primary" onclick="document.location = './views/viewAdicionarFilial.php'" style="cursor: pointer;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Adicionar nova Filial</h6>
+	</div>
 </div>
 
 <?php
 
 require './configs/footer.php';
 
-?>	
-	
+?>

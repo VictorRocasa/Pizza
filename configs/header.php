@@ -5,8 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Mondi Pizza</title>
+	
+	<?php
+	if(isset($_SESSION['adm_session']))
+		echo "<title>Administração - Mondi Pizza</title>";
+	else
+		echo "<title>Mondi Pizza</title>";
+	?>
 
     <link rel="shortcut icon" href="./assets/logo.png" type="image/x-png" />
 
@@ -38,15 +43,10 @@
 
         @media only screen and (max-width: 768px) {
             
-			#HeaderNavbar ul li{
-				margin-right: 0px;
-			}			
+        #HeaderNavbar ul li{
+            margin-right: 0px;
         }
-		
-		table, th, td {
-		  border: 1px solid black;
-		  border-collapse: collapse;
-		}
+        }
     </style>
 
 
